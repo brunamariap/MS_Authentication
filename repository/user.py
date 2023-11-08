@@ -2,7 +2,7 @@ from prisma.models import User
 from prisma.partials import UserRequest
 
 
-class StudentRepository:
+class UserRepository:
 
     def __init__(self):
         self.repository = User

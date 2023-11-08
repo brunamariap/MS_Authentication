@@ -10,13 +10,13 @@ router = APIRouter(prefix="/users", tags=['Usuários'])
 userRepository = UserRepository()
 
 @router.get("/all")
-async def list_students() -> List[UserResponse]:
+async def list_users() -> List[UserResponse]:
     response = await userRepository.get_all()
     
     return JSONResponse(content=jsonable_encoder(response), status_code=status.HTTP_200_OK)
 
 @router.post("/create")
-async def insert_student(request: UserRequest) -> UserResponse:
+async def insert_user(request: UserRequest) -> UserResponse:
     try:
         response = await userRepository.create(request.dict())
 
@@ -25,7 +25,7 @@ async def insert_student(request: UserRequest) -> UserResponse:
         return JSONResponse(content=jsonable_encoder(error), status_code=status.HTTP_400_BAD_REQUEST)
 
 @router.put("/{id}/modify")
-async def modify_student(id: str, request: UserRequest) -> UserResponse:
+async def modify_user(id: str, request: UserRequest) -> UserResponse:
     try:
         response = await userRepository.change(id, request.dict())
 
@@ -34,7 +34,7 @@ async def modify_student(id: str, request: UserRequest) -> UserResponse:
         return JSONResponse(content=jsonable_encoder(error), status_code=status.HTTP_400_BAD_REQUEST)
 
 @router.delete("/remove")
-async def remove_student(id: str) -> UserResponse:
+async def remove_user(id: str) -> UserResponse:
     response = await userRepository.remove(id)
     
     if not response:
