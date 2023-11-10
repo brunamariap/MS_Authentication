@@ -13,8 +13,8 @@ class UserRepository:
     def get_all(self):
         return self.repository.prisma().find_many()
 
-    def get_by_id(self):
-        pass
+    # def get_by_id(self):
+    #     pass
 
     def change(self, id: str, request: UserRequest):
         return self.repository.prisma().update(data=request, where={'id': id})

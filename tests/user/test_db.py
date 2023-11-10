@@ -5,15 +5,17 @@ from .test_base import TestBase
 from main import app
 import datetime
 from prisma.models import User
+from services.user import UserService
 
 client = TestClient(app)
 prefix = "/users"
 
+userService = UserService()
 
 class TestApp(TestBase):
 
     def test_get_all_users(self, setUp):
-        response = User.prisma().find_many()
+        response = userService.get_all()
 
         assert len(response) >= 0
 
@@ -25,7 +27,7 @@ class TestApp(TestBase):
             "department": "Aluno"
         }
 
-        response = User.prisma().create(user)
+        response = userService.create(user)
 
         assert response
 
@@ -44,10 +46,10 @@ class TestApp(TestBase):
             "department": "Aluno"
         }
 
-        response_create_user = User.prisma().create(user)
+        response_create_user = userService.create(user)
         user_id = response_create_user.id
         
-        response = User.prisma().update(data=edited_user, where={"id": user_id})
+        response = userService.change(user_id,edited_user, )
         
         assert response
 
@@ -59,9 +61,9 @@ class TestApp(TestBase):
             "department": "Aluno"
         }
 
-        response_create_user = User.prisma().create(user)
+        response_create_user = userService.create(user)
         user_id = response_create_user.id
 
-        response = User.prisma().delete(where={"id": user_id})
+        response = userService.remove(user_id)
         
         assert response
